@@ -55,9 +55,9 @@ COPY --from=submodule-update /opt/pytorch /opt/pytorch
 RUN make triton
 RUN --mount=type=cache,target=/opt/ccache \
     export eval ${CMAKE_VARS} && \
-    TORCH_CUDA_ARCH_LIST="7.0 7.2 7.5 8.0 8.6 8.7 8.9 9.0 9.0a" TORCH_NVCC_FLAGS="-Xfatbin -compress-all" \
+    TORCH_CUDA_ARCH_LIST="7.0;8.0;9.0" TORCH_NVCC_FLAGS="-Xfatbin -compress-all" \
     CMAKE_PREFIX_PATH="$(dirname $(which conda))/../" \
-    python setup.py install
+    USE_FLASH_ATTENTION=0 python setup.py install
 
 FROM conda as conda-installs
 ARG PYTHON_VERSION=3.11
