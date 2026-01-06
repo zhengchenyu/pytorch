@@ -40,9 +40,9 @@ void torch_tensor_test(bool show) {
   torch::autograd::impl::set_name(x1, "x1");
   torch::Tensor x2 = torch::tensor({{5.0, 6.0}, {7.0, 8.0}}, at::requires_grad());
   torch::autograd::impl::set_name(x2, "x2");
-  auto y = x1.mul(2);
+  auto y = x1.mul(x2);
   torch::autograd::impl::set_name(y, "y");
-  auto z = y.sum();
+  auto z = y.mean();
   torch::autograd::impl::set_name(z, "z");
   z.backward();
   if (show) {
